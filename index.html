@@ -112,6 +112,8 @@ var Q=[
 {q:"What concentration of sodium acetate is needed in a buffer containing 0.20 M acetic acid (pKa = 4.76) to give a pH of 5.06?",o:["0.10 M","0.20 M","0.40 M","0.80 M"],a:2,e:"5.06 = 4.76 + log([A⁻]/0.20) → log([A⁻]/0.20) = 0.30 → [A⁻]/0.20 = 1.995 → [A⁻] ≈ 0.40 M."},
 {q:"Why is the percentage of a drug that is unionized pharmaceutically important?",o:["Only unionized molecules can readily penetrate lipid cell membranes","Only ionized molecules can penetrate lipid cell membranes","Unionized drugs are always more toxic","Ionization has no effect on drug absorption"],a:0,e:"The buffer equations let us calculate the percent ionized/unionized, which matters because only unionized molecules readily cross lipid cell membranes (% unionized = 100 / (1 + 10^(pH − pKa)) for an acid)."}
 ];
+/* Paste your Google Apps Script Web app URL between the quotes. Leave empty to turn result collection off. */
+var SUBMIT_URL='';
 var N=Q.length,L=['A','B','C','D'];
 var S={name:'',i:0,sel:[],done:[],confirm:false};
 var app=document.getElementById('app');
@@ -122,7 +124,7 @@ function renderHome(msg){
   app.innerHTML='<div class="card"><h2 style="margin-top:0">Welcome</h2>'+
   '<p>This CBT has <b>'+N+' multiple-choice questions</b> on Chemical and Ionic Equilibria. There is <b>no timer</b>, so take your time.</p>'+
   '<ul><li>Select an option, then click <b>Submit Answer</b>.</li><li>You will see at once whether you are right, the correct answer and the explanation.</li><li>Then click <b>Next</b>. The navigator lets you revisit questions you have answered.</li><li>Click <b>Submit CBT</b> to see your score, percentage and grade.</li></ul>'+
-  '<label for="nm"><b>Your full name</b></label><input type="text" id="nm" placeholder="e.g. Ada Okafor" autocomplete="name" value="'+esc(nameDraft)+'">'+
+  (SUBMIT_URL?'<p class="note">When you submit the CBT, your name and score are sent to your teacher.</p>':'')+'<label for="nm"><b>Your full name</b></label><input type="text" id="nm" placeholder="e.g. Ada Okafor" autocomplete="name" value="'+esc(nameDraft)+'">'+
   (msg?'<p style="color:var(--bad);margin:0 0 10px"><b>'+msg+'</b></p>':'')+
   '<button class="btn" onclick="start()">Start CBT ▶</button></div>';
 }
@@ -186,7 +188,7 @@ function renderResult(){
   '<div class="big" style="color:'+col+'">'+sc+' / '+N+'</div>'+
   '<div class="stats"><div class="stat"><span>Score</span><strong>'+sc+' / '+N+'</strong></div><div class="stat"><span>Percentage</span><strong>'+p.toFixed(1)+'%</strong></div><div class="stat"><span>Grade</span><strong>'+g[0]+' – '+g[1]+'</strong></div></div>'+
   '<p class="note">Grading: A 70–100 · B 60–69 · C 50–59 · D 45–49 · E 40–44 · F below 40</p>'+
-  '<div class="row" style="justify-content:center"><button class="btn" onclick="renderHome()">🔁 Retake CBT</button></div></div>'+
+  '<div class="row" style="justify-content:center"><button class="btn" onclick="renderHome()">🔁 Retake CBT</button></div><div id="sendstat" class="note" style="margin-top:12px"></div></div>'+
   '<div class="card"><h3 style="margin-top:0">Review of answers</h3>';
   for(var j=0;j<N;j++){
     var q=Q[j],ans=S.sel[j],ok=S.done[j]&&ans===q.a;
@@ -195,6 +197,29 @@ function renderResult(){
   }
   h+='</div>';
   app.innerHTML=h;window.scrollTo(0,0);
+  sendResult();
+}
+function resultData(){
+  var sc=0,ans=[];
+  for(var k=0;k<N;k++){
+    var ok=S.done[k]&&S.sel[k]===Q[k].a;if(ok)sc++;
+    ans.push((k+1)+':'+(S.done[k]?L[S.sel[k]]:'-')+(ok?'+':'-'));
+  }
+  var p=sc/N*100;
+  return {name:S.name,score:sc,total:N,percent:Math.round(p*10)/10,grade:gradeOf(p)[0],answers:ans.join(' ')};
+}
+function setStatus(msg,retry){
+  var el=document.getElementById('sendstat');if(!el)return;
+  el.innerHTML=msg+(retry?' <button class="btn2" onclick="sendResult()">Retry</button>':'');
+}
+function sendResult(){
+  if(!SUBMIT_URL)return;
+  setStatus('Sending your result…',false);
+  try{
+    fetch(SUBMIT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(resultData())})
+      .then(function(){setStatus('✅ Your result has been sent to your teacher.',false)})
+      .catch(function(){setStatus('⚠️ Could not send your result. Check your internet connection and tap Retry.',true)});
+  }catch(e){setStatus('⚠️ Could not send your result. Check your internet connection and tap Retry.',true)}
 }
 renderHome();
 </script>
