@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PCH 201 Equilibria CBT</title>
+<style>
+/* Layout: single centred column, one question per screen, navigator grid beneath. */
+:root{--bg:#f2f5fb;--card:#ffffff;--ink:#1c2538;--mute:#5d6b85;--pri:#2b4c9b;--pri2:#1e376f;--onpri:#ffffff;--soft:#e8edf8;--sel:#eef3ff;--line:#d9e0ee;--ok:#1a8f4d;--okbg:#e6f6ed;--bad:#c0392b;--badbg:#fdecea;--amber:#b8570a;--shadow:rgba(30,55,111,.1)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1524;--card:#18203a;--ink:#e8ecf7;--mute:#9aa8c7;--pri:#7d9cf0;--pri2:#a9bef7;--onpri:#0f1524;--soft:#25305a;--sel:#212c52;--line:#2c3860;--ok:#4cc982;--okbg:#10301f;--bad:#f0877a;--badbg:#3a1a17;--amber:#e08b3c;--shadow:rgba(0,0,0,.4);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1524;--card:#18203a;--ink:#e8ecf7;--mute:#9aa8c7;--pri:#7d9cf0;--pri2:#a9bef7;--onpri:#0f1524;--soft:#25305a;--sel:#212c52;--line:#2c3860;--ok:#4cc982;--okbg:#10301f;--bad:#f0877a;--badbg:#3a1a17;--amber:#e08b3c;--shadow:rgba(0,0,0,.4);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:16px;line-height:1.5}
+header{background:var(--pri2);color:var(--bg);padding-block:14px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header h1{margin:0;font-size:1.1rem;text-wrap:balance}
+header p{margin:2px 0 0;font-size:.82rem;opacity:.85}
+.wrap{max-width:860px;margin:0 auto;padding-block:14px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.card{background:var(--card);border-radius:14px;box-shadow:0 2px 10px var(--shadow);padding:18px;margin-bottom:14px;min-width:0}
+h2,h3{text-wrap:balance}
+button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:10px 16px;font-weight:600;color:var(--ink)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+.btn{background:var(--pri);color:var(--onpri)}
+.btn2{background:var(--soft);color:var(--pri2)}
+.btnok{background:var(--ok);color:var(--onpri)}
+.btnfin{background:var(--amber);color:#fff}
+button:disabled{opacity:.45;cursor:not-allowed}
+input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font:inherit;margin:8px 0 14px;background:var(--bg);color:var(--ink)}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;font-size:.9rem;color:var(--mute)}
+.prog{height:8px;background:var(--soft);border-radius:6px;overflow:hidden;margin-bottom:14px}
+.prog i{display:block;height:100%;background:var(--pri);width:0;transition:width .3s}
+.qtext{font-size:1.08rem;font-weight:600;margin:6px 0 14px}
+.opt{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:9px;font-weight:500;color:var(--ink)}
+.opt:hover:not(.locked){border-color:var(--pri)}
+.opt b{background:var(--soft);color:var(--pri2);border-radius:8px;min-width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.opt span{min-width:0;overflow-wrap:anywhere}
+.opt.sel{border-color:var(--pri);background:var(--sel)}
+.opt.locked{cursor:default;opacity:1}
+.opt.right{border-color:var(--ok);background:var(--okbg)}.opt.right b{background:var(--ok);color:var(--onpri)}
+.opt.wrong{border-color:var(--bad);background:var(--badbg)}.opt.wrong b{background:var(--bad);color:var(--onpri)}
+.exp{border-left:5px solid var(--ok);background:var(--okbg);padding:12px 14px;border-radius:8px;margin-top:10px}
+.exp.bad{border-color:var(--bad);background:var(--badbg)}
+.warn{border-left:5px solid var(--amber);background:var(--soft);padding:12px 14px;border-radius:8px;margin-top:12px}
+.nav{display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap;margin-top:14px}
+.nav .grp{display:flex;gap:8px;flex-wrap:wrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:6px}
+.grid button{padding:8px 0;background:var(--soft);color:var(--ink);border:2px solid transparent;font-size:.85rem;font-variant-numeric:tabular-nums}
+.grid button.cur{border-color:var(--pri)}
+.grid button.ok{background:var(--ok);color:var(--onpri)}
+.grid button.no{background:var(--bad);color:var(--onpri)}
+.grid button:disabled{opacity:.35}
+.legend{font-size:.8rem;color:var(--mute);margin-top:8px}
+.big{font-size:2.6rem;font-weight:800;font-variant-numeric:tabular-nums}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:12px 0}
+.stat{background:var(--soft);border-radius:12px;padding:12px;text-align:center}
+.stat span{display:block;font-size:.8rem;color:var(--mute)}
+.stat strong{font-size:1.45rem;font-variant-numeric:tabular-nums}
+.rev{border-bottom:1px solid var(--line);padding:10px 0;font-size:.93rem;overflow-wrap:anywhere}
+.tag{display:inline-block;border-radius:6px;padding:1px 8px;font-size:.75rem;font-weight:700;color:var(--onpri)}
+.note{font-size:.84rem;color:var(--mute)}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+@media (prefers-reduced-motion:reduce){.prog i{transition:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>PCH 201 · Chemical and Ionic Equilibria</h1>
+  <p>CBT practice · 40 questions · no timer</p>
+</header>
+<div class="wrap"><div id="app"></div></div>
+
+<script>
+var Q=[
+{q:"Chemical equilibrium is reached when:",o:["The reaction has stopped completely","The forward and backward reactions occur at equal rates, so concentrations stay constant","All reactants have been converted into products","The temperature of the system becomes zero"],a:1,e:"Equilibrium is dynamic: the reaction proceeds in both directions at equal rates, so concentrations of reactants and products remain constant over time."},
+{q:"At equilibrium, the system has reached:",o:["Complete conversion of reactants to products","A balance, not complete conversion of reactants to products","A state where only the reverse reaction occurs","A state where the catalyst is used up"],a:1,e:"The notes stress that equilibrium is a balance of the two opposing rates – not complete conversion of reactants to products."},
+{q:"The law of mass action states that, at a given temperature, the rate of a chemical reaction is proportional to:",o:["The volume of the container only","The product of reactant concentrations, each raised to the power of its stoichiometric coefficient","The sum of product concentrations","The pH of the solution"],a:1,e:"Rate ∝ product of reactant concentrations raised to their stoichiometric coefficients. This is the basis for the equilibrium constant K."},
+{q:"For the reaction aA + bB ⇌ cC + dD, the equilibrium constant Kc is:",o:["[A]ᵃ[B]ᵇ / [C]ᶜ[D]ᵈ","[C]ᶜ + [D]ᵈ / [A]ᵃ + [B]ᵇ","[C]ᶜ[D]ᵈ / [A]ᵃ[B]ᵇ","[A]ᵃ + [B]ᵇ − [C]ᶜ − [D]ᵈ"],a:2,e:"K is products over reactants, each raised to its coefficient: Kc = [C]ᶜ[D]ᵈ / [A]ᵃ[B]ᵇ."},
+{q:"Setting kf[A]ᵃ[B]ᵇ = kb[C]ᶜ[D]ᵈ at equilibrium and rearranging shows that Kc equals:",o:["kb / kf","kf × kb","kf − kb","kf / kb"],a:3,e:"Equal forward and backward rates rearrange to Kc = kf/kb = [C]ᶜ[D]ᵈ / [A]ᵃ[B]ᵇ."},
+{q:"Which of the following are NOT included in an equilibrium-constant expression?",o:["Gases and solutes in solution","Pure solids, pure liquids and the solvent present in excess","Products only","Species with the highest concentration"],a:1,e:"Pure solids, pure liquids and excess solvent have constant concentrations (activities) so they are omitted. Only gases and solutes appear."},
+{q:"According to Le Châtelier's principle, increasing the concentration of a reactant shifts the equilibrium:",o:["Toward the products","Toward the reactants","Nowhere – K changes instead","Toward the side with more gas molecules"],a:0,e:"The system counteracts the added reactant by consuming it, so the equilibrium shifts toward the products."},
+{q:"Increasing the temperature of a system at equilibrium favours:",o:["The exothermic direction","The side with fewer gas molecules","The endothermic direction","The reverse reaction always"],a:2,e:"A rise in temperature is counteracted by absorbing heat, so the endothermic direction is favoured."},
+{q:"Increasing the pressure on a gaseous equilibrium favours:",o:["The side with more gas molecules","The side with fewer gas molecules","The endothermic direction","No change in either direction"],a:1,e:"The system relieves the added pressure by shifting to the side with fewer gas molecules."},
+{q:"A catalyst affects a chemical equilibrium by:",o:["Shifting the position toward products","Shifting the position toward reactants","Changing the rate of reaching equilibrium but not the position of equilibrium","Increasing the value of K"],a:2,e:"A catalyst speeds up both forward and reverse reactions equally, so equilibrium is reached faster but its position is unchanged."},
+{q:"The common-ion effect usually results in:",o:["Increased ionization or solubility","Suppressed ionization or solubility","A rise in the equilibrium constant","Complete dissociation of a weak acid"],a:1,e:"Adding an ion already present shifts the equilibrium (Le Châtelier) and usually suppresses ionization or solubility."},
+{q:"Starting with 1 mole of PCl₅ ⇌ PCl₃ + Cl₂, if 0.135 mol PCl₃ is present at equilibrium, the moles of PCl₅ and Cl₂ at equilibrium are:",o:["PCl₅ = 0.135 mol; Cl₂ = 0.865 mol","PCl₅ = 0.865 mol; Cl₂ = 0.135 mol","PCl₅ = 1.000 mol; Cl₂ = 0.135 mol","PCl₅ = 0.865 mol; Cl₂ = 0.865 mol"],a:1,e:"ICE box: x = 0.135 mol PCl₃ formed, so Cl₂ = x = 0.135 mol and PCl₅ = 1.00 − x = 0.865 mol."},
+{q:"0.5 mol of HI is placed in a 5 L flask (2HI ⇌ H₂ + I₂, Kc = 0.016). What is [HI] at equilibrium?",o:["0.100 M","0.010 M","0.090 M","0.080 M"],a:3,e:"Initial [HI] = 0.5/5 = 0.10 M. Kc = x²/(0.10 − 2x)² gives √0.016 = 0.126 = x/(0.10 − 2x), so x = 0.010 M. [HI] = 0.10 − 2(0.010) = 0.080 M; [H₂] = [I₂] = 0.010 M."},
+{q:"For N₂O₄ ⇌ 2NO₂ at 373 K, Kc = 0.36 and initial [N₂O₄] = 0.1 M. What is [NO₂] at equilibrium?",o:["0.06 M","0.12 M","0.04 M","0.36 M"],a:1,e:"Kc = (2x)²/(0.100 − x) = 0.36 → 4x² + 0.36x − 0.036 = 0 → x = 0.06. [NO₂] = 2x = 0.12 M."},
+{q:"For CO + H₂O ⇌ CO₂ + H₂ (Kc = 5.1) with 0.40 mol CO and 0.20 mol H₂O in 2.0 L, the quadratic gives two roots (0.286 and 0.087). Why is 0.286 rejected?",o:["It is smaller than Kc","It would make [H₂O] = 0.10 − x negative","It would make [CO₂] negative","Quadratic roots above 0.1 are always rejected"],a:1,e:"Initial [H₂O] is only 0.10 M, so x cannot exceed 0.10. x = 0.286 gives a negative concentration. Valid x = 0.087 M, so [CO₂] = [H₂] = 0.087 M, [CO] = 0.113 M, [H₂O] = 0.013 M."},
+{q:"Which of the following is a weak electrolyte?",o:["HCl","NaOH","K₂SO₄","CH₃COOH"],a:3,e:"CH₃COOH (acetic acid) ionizes only partially. HCl, NaOH and K₂SO₄ are strong electrolytes that ionize completely."},
+{q:"According to the Brønsted–Lowry theory, an acid is:",o:["A proton (H⁺) acceptor","An electron-pair donor","A proton (H⁺) donor","Any substance that conducts electricity"],a:2,e:"Brønsted–Lowry: an acid is a proton donor and a base is a proton acceptor."},
+{q:"In NH₃ + H₂O ⇌ NH₄⁺ + OH⁻, the conjugate acid of NH₃ is:",o:["H₂O","OH⁻","NH₄⁺","H₃O⁺"],a:2,e:"When NH₃ (the base) accepts a proton it forms its conjugate acid, NH₄⁺. OH⁻ is the conjugate base of H₂O."},
+{q:"Non-electrolytes are substances that:",o:["Ionize partially in solution","Ionize completely in solution","Do not ionize in solution and therefore do not conduct electricity","Conduct electricity only when heated"],a:2,e:"Non-electrolytes do not form ions in solution, so their solutions do not conduct electricity."},
+{q:"The ion-product constant for water, Kw, at 25°C is approximately:",o:["1.0 × 10⁻⁷","1.0 × 10⁻¹⁴","1.0 × 10⁻¹","1.0 × 10¹⁴"],a:1,e:"Kw = [H₃O⁺][OH⁻] ≈ 1.00 × 10⁻¹⁴ at 25°C."},
+{q:"For a conjugate acid–base pair, the relationship between Ka, Kb and Kw is:",o:["Ka + Kb = Kw","Ka / Kb = Kw","Ka × Kb = Kw","Ka − Kb = Kw"],a:2,e:"Multiplying the Ka expression of NH₄⁺ by the Kb expression of NH₃ gives [H₃O⁺][OH⁻], so KaKb = Kw."},
+{q:"The Ka of acetic acid at 25°C is 1.8 × 10⁻⁵. The Kb of its conjugate base, acetate, is approximately:",o:["1.8 × 10⁻¹⁹","5.6 × 10⁻¹⁰","5.6 × 10⁻⁵","1.8 × 10⁻⁹"],a:1,e:"Kb = Kw/Ka = (1.0 × 10⁻¹⁴)/(1.8 × 10⁻⁵) = 5.6 × 10⁻¹⁰."},
+{q:"The Ka of an acid at 25°C is 4.0 × 10⁻¹⁰. Its pKa is:",o:["4.60","10.40","9.40","0.40"],a:2,e:"pKa = −log(4.0 × 10⁻¹⁰) = 9.40."},
+{q:"For the acid with Ka = 4.0 × 10⁻¹⁰, the pKb of its conjugate base is:",o:["9.40","4.60","14.00","2.5"],a:1,e:"Kb = Kw/Ka = 2.5 × 10⁻⁵, so pKb = 4.60. Check: pKa + pKb = 9.40 + 4.60 = 14 = pKw."},
+{q:"The pH of a 0.05 M solution of HCl (a strong acid) is:",o:["1.30","0.05","2.30","12.70"],a:0,e:"HCl ionizes completely, so [H₃O⁺] = 0.05 M. pH = −log(0.05) = 1.30."},
+{q:"At 25°C, which relationship is correct?",o:["pH − pOH = 14","pH + pOH = pKw (= 14)","pH × pOH = 14","pH = pOH always"],a:1,e:"pH + pOH = pKw, which is 14 at 25°C. Likewise pKa + pKb = pKw."},
+{q:"Which statement about pKa and acid strength is correct?",o:["The larger the pKa, the stronger the acid","pKa has no relationship with acid strength","The smaller the pKa, the stronger the acid","pKa equals the pH of the pure acid"],a:2,e:"pKa = −log Ka. A smaller pKa means a larger Ka, i.e. greater ionization and a stronger acid."},
+{q:"According to the notes, the neutral pH of water at 100°C is:",o:["7.47","7.00","8.00","6.15"],a:3,e:"Neutral pH varies with temperature: 7.47 at 0°C and 6.15 at 100°C (7 at room temperature)."},
+{q:"A 0.1 M solution of barbituric acid has [H⁺] = 3.24 × 10⁻³ M. Its pH is:",o:["2.49","3.24","1.00","11.51"],a:0,e:"pH = −log(3.24 × 10⁻³) = 2.49."},
+{q:"If the pH of a solution is 4.72, the hydrogen ion concentration is:",o:["4.72 × 10⁻¹ M","1.91 × 10⁻⁵ M","5.25 × 10⁻¹⁰ M","1.91 × 10⁻⁴ M"],a:1,e:"[H⁺] = antilog(−4.72) = 1.91 × 10⁻⁵ M."},
+{q:"A 0.50 M ammonia solution has Kb = 1.8 × 10⁻⁵ (assume x ≪ 0.50). Its pH is approximately:",o:["2.52","9.43","11.48","12.70"],a:2,e:"x = [OH⁻] = √(Kb × 0.50) = 0.003 M. pOH = 2.52, so pH = 14 − 2.52 = 11.48."},
+{q:"0.005 mol of acetic acid (Ka = 1.8 × 10⁻⁵) is dissolved in 500 mL of water. The pH is approximately:",o:["2.37","3.37","4.37","5.37"],a:1,e:"C = 0.005/0.500 = 0.010 M. x = √(1.8 × 10⁻⁵ × 0.010) = 4.24 × 10⁻⁴ M. pH = −log(4.24 × 10⁻⁴) ≈ 3.37."},
+{q:"A buffer solution is one that:",o:["Has a pH of exactly 7","Resists changes in pH when small amounts of acid or alkali are added","Contains only strong acids","Conducts no electricity"],a:1,e:"Buffers have a definite, stable pH and resist pH change on addition of small amounts of acid or base."},
+{q:"Which of these is an acidic buffer?",o:["NH₃ + NH₄Cl","HCl + NaCl","NaOH + NaCl","CH₃COOH + CH₃COONa"],a:3,e:"An acidic buffer is a weak acid plus its conjugate base (salt): acetic acid + sodium acetate. NH₃ + NH₄Cl is a basic buffer."},
+{q:"A basic buffer consists of:",o:["A weak base and its conjugate acid (salt), e.g. NH₃ + NH₄Cl","A strong base and a strong acid","A weak acid and its salt","Water and a salt only"],a:0,e:"A basic buffer is a weak base plus its conjugate acid, e.g. NH₃ + NH₄Cl."},
+{q:"The Henderson–Hasselbalch equation for an acidic buffer is:",o:["pH = pKa − log([Salt]/[Acid])","pH = pKa + log([Acid]/[Salt])","pH = pKa × log([Salt]/[Acid])","pH = pKa + log([Salt]/[Acid])"],a:3,e:"For an acid buffer: pH = pKa + log([Salt]/[Acid]) (or pH = pKa + log [A⁻]/[HA])."},
+{q:"A buffer contains 0.20 M acetic acid and 0.10 M sodium acetate (pKa = 4.76). Its pH is:",o:["4.46","4.76","5.06","4.16"],a:0,e:"pH = 4.76 + log(0.10/0.20) = 4.76 + log(0.5) = 4.76 − 0.301 = 4.46."},
+{q:"A buffer contains 0.15 M NH₃ and 0.10 M NH₄Cl (pKb of ammonia = 4.75). Its pH is:",o:["4.57","9.43","9.07","4.75"],a:1,e:"pOH = pKb + log([NH₄⁺]/[NH₃]) = 4.75 + log(0.10/0.15) = 4.75 − 0.176 = 4.574. pH = 14 − 4.574 = 9.43."},
+{q:"What concentration of sodium acetate is needed in a buffer containing 0.20 M acetic acid (pKa = 4.76) to give a pH of 5.06?",o:["0.10 M","0.20 M","0.40 M","0.80 M"],a:2,e:"5.06 = 4.76 + log([A⁻]/0.20) → log([A⁻]/0.20) = 0.30 → [A⁻]/0.20 = 1.995 → [A⁻] ≈ 0.40 M."},
+{q:"Why is the percentage of a drug that is unionized pharmaceutically important?",o:["Only unionized molecules can readily penetrate lipid cell membranes","Only ionized molecules can penetrate lipid cell membranes","Unionized drugs are always more toxic","Ionization has no effect on drug absorption"],a:0,e:"The buffer equations let us calculate the percent ionized/unionized, which matters because only unionized molecules readily cross lipid cell membranes (% unionized = 100 / (1 + 10^(pH − pKa)) for an acid)."}
+];
+var N=Q.length,L=['A','B','C','D'];
+var S={name:'',i:0,sel:[],done:[],confirm:false};
+var app=document.getElementById('app');
+var nameDraft='';
+
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function renderHome(msg){
+  app.innerHTML='<div class="card"><h2 style="margin-top:0">Welcome</h2>'+
+  '<p>This CBT has <b>'+N+' multiple-choice questions</b> on Chemical and Ionic Equilibria. There is <b>no timer</b>, so take your time.</p>'+
+  '<ul><li>Select an option, then click <b>Submit Answer</b>.</li><li>You will see at once whether you are right, the correct answer and the explanation.</li><li>Then click <b>Next</b>. The navigator lets you revisit questions you have answered.</li><li>Click <b>Submit CBT</b> to see your score, percentage and grade.</li></ul>'+
+  '<label for="nm"><b>Your full name</b></label><input type="text" id="nm" placeholder="e.g. Ada Okafor" autocomplete="name" value="'+esc(nameDraft)+'">'+
+  (msg?'<p style="color:var(--bad);margin:0 0 10px"><b>'+msg+'</b></p>':'')+
+  '<button class="btn" onclick="start()">Start CBT ▶</button></div>';
+}
+function start(){
+  var n=document.getElementById('nm').value.trim();nameDraft=n;
+  if(!n){renderHome('Please enter your name to begin.');return}
+  S={name:n,i:0,sel:new Array(N).fill(-1),done:new Array(N).fill(false),confirm:false};
+  renderQ();
+}
+function firstOpen(){for(var k=0;k<N;k++)if(!S.done[k])return k;return N-1}
+function renderQ(){
+  var i=S.i,q=Q[i],done=S.done[i],sel=S.sel[i],cnt=S.done.filter(Boolean).length;
+  var h='<div class="bar"><span><b>'+esc(S.name)+'</b></span><span>Answered: '+cnt+' / '+N+'</span></div>'+
+  '<div class="prog"><i style="width:'+(cnt/N*100)+'%"></i></div><div class="card">'+
+  '<div class="note">Question '+(i+1)+' of '+N+'</div><div class="qtext">'+q.q+'</div>';
+  for(var k=0;k<4;k++){
+    var c='opt';
+    if(done){c+=' locked';if(k===q.a)c+=' right';else if(k===sel)c+=' wrong'}
+    else if(k===sel)c+=' sel';
+    h+='<button class="'+c+'" '+(done?'disabled':'onclick="pick('+k+')"')+'><b>'+L[k]+'</b><span>'+q.o[k]+'</span></button>';
+  }
+  if(done){
+    var ok=sel===q.a;
+    h+='<div class="exp '+(ok?'':'bad')+'"><b>'+(ok?'✅ Correct!':'❌ Incorrect.')+'</b> The correct answer is <b>'+L[q.a]+'. '+q.o[q.a]+'</b>.<br>'+q.e+'</div>';
+  }
+  h+='<div class="nav"><div class="grp"><button class="btn2" onclick="go('+(i-1)+')" '+(i===0?'disabled':'')+'>◀ Previous</button>'+
+  '<button class="btnok" onclick="submitAns()" '+((done||sel<0)?'disabled':'')+'>Submit Answer</button></div>'+
+  '<div class="grp"><button class="btn" onclick="go('+(i+1)+')" '+((i===N-1||!done)?'disabled':'')+'>Next ▶</button>'+
+  '<button class="btnfin" onclick="finish()">Submit CBT ✔</button></div></div>';
+  if(S.confirm){
+    var un=N-cnt;
+    h+='<div class="warn"><b>'+un+' question'+(un===1?'':'s')+' still unanswered.</b> Unanswered questions score zero. Submit the CBT anyway?'+
+    '<div class="row" style="margin-top:10px"><button class="btnfin" onclick="doFinish()">Yes, submit CBT</button><button class="btn2" onclick="cancelFinish()">Go back</button></div></div>';
+  }
+  h+='</div>';
+  h+='<div class="card"><b>Question navigator</b><div class="grid" style="margin-top:8px">';
+  var lim=firstOpen();
+  for(var j=0;j<N;j++){
+    var c2=S.done[j]?(S.sel[j]===Q[j].a?'ok':'no'):'';
+    if(j===i)c2+=' cur';
+    h+='<button class="'+c2+'" onclick="go('+j+')" '+(j>lim?'disabled':'')+' aria-label="Question '+(j+1)+'">'+(j+1)+'</button>';
+  }
+  h+='</div><div class="legend">Green = correct · red = wrong · plain = not yet answered. You can jump up to the first unanswered question.</div></div>';
+  app.innerHTML=h;window.scrollTo(0,0);
+}
+function pick(k){if(S.done[S.i])return;S.sel[S.i]=k;renderQ()}
+function submitAns(){if(S.sel[S.i]<0||S.done[S.i])return;S.done[S.i]=true;S.confirm=false;renderQ()}
+function go(j){if(j<0||j>=N)return;if(j>firstOpen())return;S.i=j;S.confirm=false;renderQ()}
+function gradeOf(p){return p>=70?['A','Excellent']:p>=60?['B','Very Good']:p>=50?['C','Good']:p>=45?['D','Fair']:p>=40?['E','Pass']:['F','Fail']}
+function finish(){
+  var un=S.done.filter(function(x){return !x}).length;
+  if(un>0){S.confirm=true;renderQ();return}
+  renderResult();
+}
+function cancelFinish(){S.confirm=false;renderQ()}
+function doFinish(){renderResult()}
+function renderResult(){
+  var sc=0;for(var k=0;k<N;k++)if(S.done[k]&&S.sel[k]===Q[k].a)sc++;
+  var p=sc/N*100,g=gradeOf(p),col=p>=40?'var(--ok)':'var(--bad)';
+  var h='<div class="card" style="text-align:center"><h2 style="margin:0">CBT Result</h2><p class="note">'+esc(S.name)+' · PCH 201 Chemical and Ionic Equilibria</p>'+
+  '<div class="big" style="color:'+col+'">'+sc+' / '+N+'</div>'+
+  '<div class="stats"><div class="stat"><span>Score</span><strong>'+sc+' / '+N+'</strong></div><div class="stat"><span>Percentage</span><strong>'+p.toFixed(1)+'%</strong></div><div class="stat"><span>Grade</span><strong>'+g[0]+' – '+g[1]+'</strong></div></div>'+
+  '<p class="note">Grading: A 70–100 · B 60–69 · C 50–59 · D 45–49 · E 40–44 · F below 40</p>'+
+  '<div class="row" style="justify-content:center"><button class="btn" onclick="renderHome()">🔁 Retake CBT</button></div></div>'+
+  '<div class="card"><h3 style="margin-top:0">Review of answers</h3>';
+  for(var j=0;j<N;j++){
+    var q=Q[j],ans=S.sel[j],ok=S.done[j]&&ans===q.a;
+    h+='<div class="rev"><span class="tag" style="background:'+(ok?'var(--ok)':'var(--bad)')+'">'+(ok?'Correct':(S.done[j]?'Wrong':'Skipped'))+'</span> <b>Q'+(j+1)+'.</b> '+q.q+
+    '<br>Your answer: '+(ans>=0&&S.done[j]?L[ans]+'. '+q.o[ans]:'—')+'<br>Correct answer: <b>'+L[q.a]+'. '+q.o[q.a]+'</b><br><span class="note">'+q.e+'</span></div>';
+  }
+  h+='</div>';
+  app.innerHTML=h;window.scrollTo(0,0);
+}
+renderHome();
+</script>
+
+</body>
+</html>
