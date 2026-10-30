@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="PCT 203 Dispensing I — 40-question CBT practice for Lead City University students.">
+<title>PCT 203 · Dispensing I | MundiLearning CBT</title>
+<style>
+:root{--bg:#f2f5fb;--card:#fff;--ink:#17233b;--mute:#60718b;--pri:#284b97;--pri2:#203c75;--soft:#e8edf8;--line:#d5dfee;--ok:#167b45;--okbg:#e5f7ed;--bad:#bd382d;--badbg:#fff0ef;--amber:#a65c00;--shadow:rgba(25,47,93,.1)}
+@media(prefers-color-scheme:dark){:root{--bg:#10172b;--card:#1b2741;--ink:#f0f3fa;--mute:#b5c2d8;--pri:#87a6fc;--pri2:#263e76;--soft:#2a3857;--line:#415270;--ok:#56ce87;--okbg:#193a2d;--bad:#ff9c92;--badbg:#482927;--amber:#e5ab64;--shadow:rgba(0,0,0,.26)}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.5}
+header{background:#203c75;color:#fff;padding:16px max(16px,calc((100vw - 900px)/2));}
+header h1{font-size:1.15rem;line-height:1.4;margin:0}header p{font-size:.84rem;margin:2px 0 0;opacity:.87}
+main{max-width:900px;margin:auto;padding:15px 14px 36px}.card{background:var(--card);border-radius:14px;padding:20px;box-shadow:0 2px 11px var(--shadow);margin-bottom:14px}
+h2{margin:0 0 10px;font-size:1.42rem}h3{margin:0 0 12px}p{margin:9px 0 13px}.muted,.note{color:var(--mute);font-size:.88rem}
+input[type=text]{width:100%;padding:12px;background:var(--bg);border:1px solid var(--line);border-radius:9px;color:var(--ink);font:inherit;margin:8px 0 14px}
+button{font:inherit;font-weight:650;cursor:pointer;border:0;border-radius:9px;padding:11px 14px}
+button:disabled{opacity:.44;cursor:not-allowed}button:focus-visible,input:focus-visible{outline:3px solid #6c99eb;outline-offset:2px}
+.primary{background:#284b97;color:#fff}.secondary{background:var(--soft);color:var(--ink)}.positive{background:#197548;color:#fff}.finish{background:#9d5a0d;color:#fff}
+.topline,.actions,.actions .group{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}.topline{margin-bottom:8px;color:var(--mute);font-size:.92rem}
+.progress{height:8px;border-radius:6px;background:var(--line);overflow:hidden;margin-bottom:14px}.progress>div{height:100%;background:#416dbe;transition:width .2s}
+.question{font-size:1.13rem;font-weight:700;margin:8px 0 16px}
+.option{width:100%;display:flex;gap:12px;text-align:left;align-items:flex-start;background:var(--card);color:var(--ink);border:2px solid var(--line);padding:11px;margin-bottom:9px;font-weight:500}
+.option b{background:var(--soft);padding:2px 8px;border-radius:7px;min-width:30px;text-align:center}
+.option.selected{border-color:#5084e6;background:var(--soft)}.option.correct{border-color:var(--ok);background:var(--okbg)}.option.incorrect{border-color:var(--bad);background:var(--badbg)}
+.option.correct b{background:var(--ok);color:#fff}.option.incorrect b{background:var(--bad);color:#fff}
+.explanation{background:var(--okbg);border-left:5px solid var(--ok);padding:13px;border-radius:7px;margin-top:12px}.explanation.wrong{background:var(--badbg);border-color:var(--bad)}
+.actions{margin-top:14px}.actions .group{justify-content:flex-start}
+.navigator{display:grid;grid-template-columns:repeat(auto-fill,minmax(42px,1fr));gap:7px;margin-top:12px}
+.navigator button{padding:8px 1px;color:var(--ink);background:var(--soft);border:2px solid transparent}
+.navigator button.active{border-color:#5e8de0}.navigator button.correct{background:#177a47;color:#fff}.navigator button.incorrect{background:#b43b30;color:#fff}
+.warning{padding:12px;border-left:5px solid var(--amber);background:var(--soft);border-radius:8px;margin-top:14px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:11px;margin:16px 0}.stat{background:var(--soft);border-radius:11px;text-align:center;padding:13px}.stat strong{display:block;font-size:1.65rem}.stat small{color:var(--mute)}
+.review{border-bottom:1px solid var(--line);padding:13px 0}.review:last-child{border-bottom:0}.review .heading{font-weight:700}
+.badge{display:inline-block;padding:1px 8px;border-radius:6px;background:var(--ok);color:#fff;font-size:.75rem;font-weight:700}.badge.no{background:var(--bad)}
+a{color:#537ee2}.foot{text-align:center;font-size:.8rem;color:var(--mute);padding:8px}
+@media(max-width:560px){main{padding:12px 10px 26px}.card{padding:15px}.actions .group{width:100%;justify-content:space-between}.actions button{flex:1}}
+</style></head>
+<body>
+<header><h1>PCT 203 · Dispensing I</h1><p>Lead City University, Ibadan · 2026/2027 · 40 questions · No timer</p></header>
+<main><div id="app"></div><p class="foot">MundiLearning CBT · Educational practice only; verify clinical decisions using current professional references.</p></main>
+<script>
+"use strict";
+const QUESTIONS=[["What is the title of PCT 203 at Lead City University?",["Pharmaceutical Chemistry II","Dispensing I","Pharmacology III","Pharmacognosy I"],1,"The uploaded 2026/2027 courseware identifies PCT 203 as Dispensing I."],["Which laboratory item is intended for measuring the volume of a liquid?",["Graduated measuring cylinder","Mortar and pestle","Spatula","Powder paper"],0,"A graduated cylinder has a volume scale; a mortar and pestle is mainly used for grinding or mixing solids."],["For an ordinary clear liquid in a measuring cylinder, the most reliable way to read its volume is to:",["View the cylinder from directly above","Read at eye level at the bottom of the meniscus","Tilt the cylinder toward the light","Read the top edge of the label"],1,"The eye-level, bottom-of-meniscus reading reduces parallax error for most clear liquids."],["A pharmaceutical dosage form is best described as:",["The marketing name of a medicine","The physical form in which a medicine is prepared for use","The pharmacist's licence number","The expiry date of an active ingredient"],1,"Tablets, capsules, suspensions and ointments are examples of dosage forms."],["Which is a solid dosage form?",["Suspension","Elixir","Capsule","Eye drops"],2,"A capsule is a solid dosage form."],["Which is a liquid dosage form?",["Tablet","Suspension","Powder sachet","Ointment"],1,"A suspension is a liquid preparation containing dispersed solid particles."],["Which is generally a semisolid dosage form?",["Ointment","Capsule","Elixir","Solution"],0,"An ointment is a semisolid preparation typically applied to the skin or other appropriate surfaces."],["The abbreviation 'Susp.' on a prescription indicates a:",["Suppository","Suspension","Sublingual tablet","Sterile injection"],1,"The courseware uses 'Susp.' for suspension."],["The abbreviation 'Cap.' indicates a:",["Capsule","Caplet only","Cream","Concentrate"],0,"'Cap.' means capsule in the courseware's prescription examples."],["The abbreviation 'Tab.' refers to:",["Tincture","Tablet","Topical paint","Transdermal patch"],1,"'Tab.' is the standard shortened form used for tablet in the examples."],["Compounding in a dispensing laboratory mainly involves:",["Combining ingredients to prepare a medicine as required","Advertising medicines","Performing diagnostic imaging","Registering a company"],0,"The course highlights minor compounding and dispensing of medicines."],["An 'extemporaneous' preparation is typically made:",["Only in a commercial factory for a full year","For a particular need or prescription at the time it is required","Without any measurements","Exclusively as a tablet"],1,"Extemporaneous preparations are compounded for a specific need rather than supplied as a standard ready-made product."],["In pharmaceutical preparation, a 'bulk' preparation usually means:",["A preparation made in a larger quantity before division or dispensing","A preparation with no label","A product containing only one dose","A preparation intended only for injection"],0,"Bulk preparation refers to a larger quantity prepared before individual dispensing, subject to quality and stability requirements."],["How do divided powders differ from bulk powders?",["Divided powders are liquids","Divided powders are portioned into individual doses","Divided powders cannot contain active ingredients","Divided powders are always sterile"],1,"Divided powders have been apportioned into separate doses, unlike a supply of bulk powder."],["What feature is especially associated with pharmaceutical collodions?",["They are hard gelatin capsules","They usually leave a thin film when the solvent evaporates","They are always swallowed whole","They are used only as eye drops"],1,"Collodions are film-forming liquid preparations; the course lecture plan includes their preparation."],["Pharmaceutical 'paints' are generally designed to be:",["Applied to a particular body surface or local area","Injected into a vein","Inhaled as a gas only","Used only as oral tablets"],0,"Pharmaceutical paints are preparations applied locally, for example to an affected surface, as appropriate for the product."],["Administration of eye drops is an example of which route?",["Oral","Rectal","Ophthalmic","Inhalational"],2,"The ophthalmic route delivers a preparation to the eye."],["Application of an ointment to the skin is an example of which route?",["Topical","Intravenous","Intra-articular","Sublingual"],0,"Topical administration means application to a body surface such as the skin."],["In a prescription, 'bd' means:",["Once weekly","Twice daily","Three times daily","At bedtime only"],1,"'bd' indicates two administrations in a day."],["In a prescription, 'tds' means:",["Three times daily","Twice daily","One dose only","Four times daily"],0,"'tds' indicates three doses in a day."],["In a prescription, 'qid' means:",["Every other day","Four times daily","Once daily","At bedtime"],1,"'qid' denotes four administrations per day."],["In a prescription, 'od' means:",["Once daily","Twice daily","Every four hours","Only when painful"],0,"In the courseware's prescription examples, 'od' indicates once daily. The meaning of abbreviations should always be checked in context."],["The instruction 'nocte' means:",["Before breakfast","At night","Every afternoon","With each meal"],1,"'Nocte' is used for a medicine intended to be taken at night."],["In an eye-drop prescription, 'OU' denotes:",["Left eye only","Right eye only","Both eyes","Both ears"],2,"OU (oculus uterque) means both eyes."],["In the courseware's duration notation, 'x 5/7' means:",["For five weeks","For seven months","For five days","Five times per day"],2,"The prescription examples use '5/7' to indicate a five-day course."],["In the courseware's duration notation, 'x 1/52' means:",["For one week","For one day","For 52 days","For one month"],0,"The example interprets '1/52' as one week (one of 52 weeks in a year)."],["In the courseware's duration notation, 'x 1/12' means:",["One hour","One month","Twelve days","One year"],1,"The tutorial interprets '1/12' as one month (one of 12 months in a year)."],["One capsule of amoxicillin is prescribed three times daily for five days. How many capsules are needed?",["10","12","15","20"],2,"3 capsules per day × 5 days = 15 capsules, assuming one capsule per dose."],["One tablet of folic acid is prescribed once daily for a 30-day month. How many tablets are needed?",["15","20","30","60"],2,"1 tablet daily × 30 days = 30 tablets. The example assumes a 30-day month."],["One capsule of flucloxacillin is prescribed four times daily for 10 days. How many capsules are required?",["20","30","40","50"],2,"4 capsules per day × 10 days = 40 capsules."],["One tablet of chlorpromazine is prescribed twice daily for 30 days. How many tablets are required?",["30","45","60","90"],2,"2 tablets per day × 30 days = 60 tablets."],["A suspension is prescribed as 5 mL twice daily for seven days. What total volume will be administered?",["35 mL","50 mL","70 mL","140 mL"],2,"5 mL per dose × 2 doses per day × 7 days = 70 mL."],["Which instruction is especially important for a typical pharmaceutical suspension?",["Shake well before each dose","Always freeze before use","Crush the bottle before opening","Discard the cap immediately"],0,"Particles may settle in a suspension; shaking as directed helps redistribute them before measuring a dose."],["The concentration '60% v/v' of alcohol means:",["60 g of alcohol in 100 g of mixture","60 mL of alcohol per 100 mL of final solution","60 mL of water per litre","60 tablets in 100 mL"],1,"Volume/volume percentage represents the volume of liquid component per 100 mL of final solution (at the specified conditions)."],["What is the standard dilution equation used for the alcohol calculations in the courseware?",["C₁V₁ = C₂V₂","PV = nRT","E = mc²","pH = −log[OH⁻]"],0,"For simple concentration dilution calculations, initial concentration × initial volume = target concentration × final volume."],["Approximately how much 99% v/v alcohol is required to prepare 20 mL of 60% v/v alcohol?",["7.88 mL","10.00 mL","12.12 mL","19.80 mL"],2,"V₁ = (60 × 20) / 99 = 12.12 mL of the 99% stock alcohol."],["Approximately how much 99% v/v alcohol is required to prepare 30 mL of 70% v/v alcohol?",["9.00 mL","21.21 mL","23.10 mL","29.70 mL"],1,"V₁ = (70 × 30) / 99 = 21.21 mL of 99% alcohol."],["When accurately preparing a dilution to a stated final volume, the diluent should be added:",["Until the final solution reaches the required volume","As an equal volume regardless of the target","Only after the product has been dispensed","Without any measurement"],0,"Measure the stock solution and make up to the target final volume. Liquid volumes may not be perfectly additive when mixed."],["Which reference is specifically mentioned in the PCT 203 courseware for checking medicine dosing and breastfeeding information?",["British National Formulary (BNF)","Oxford English Dictionary","A national atlas","An anatomy colouring book"],0,"The tutorial instructs students to use the BNF for questions on rabeprazole. For real decisions, consult the current edition and clinical guidance."],["The product carton pictured on page 4 of the courseware is labelled 'Barzox-60'. Its generic ingredient is:",["Folic acid","Amoxicillin","Phenobarbitone","Rabeprazole"],2,"The carton shown on page 4 reads 'Phenobarbitone Tablets IP 60 mg' and 'Barzox-60'."]];
+const SUBMIT_URL="https://script.google.com/macros/s/AKfycbyOP1esKZzCUfkc0Pn_eMZVqyBup3ideOXZFDvjkiWbrXbLfwmgaBXY-01Fy9rA-ToFCw/exec";
+const COURSE="PCT 203 - Dispensing I";
+const LETTERS=["A","B","C","D"];
+const app=document.getElementById("app");
+let state=null;
+let nameDraft="";
+function escapeHtml(t){return String(t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function grades(p){return p>=70?["A","Excellent"]:p>=60?["B","Very good"]:p>=50?["C","Good"]:p>=45?["D","Fair"]:p>=40?["E","Pass"]:["F","Fail"];}
+function home(message=""){
+  app.innerHTML='<section class="card"><h2>Welcome</h2>'+
+    '<p>This CBT contains <b>40 multiple-choice questions</b> on <b>PCT 203: Dispensing I</b>, based on the 2026/2027 Lead City University courseware. There is <b>no timer</b>.</p>'+
+    '<ul><li>Enter your name and select <b>Start CBT</b>.</li><li>Choose an option and click <b>Submit Answer</b> to see the correct answer and explanation.</li><li>Click <b>Next</b> to continue. Use the navigator to revisit answered questions.</li><li>Click <b>Submit CBT</b> to view your score, grade and complete review.</li></ul>'+
+    '<p class="note">The page attempts to send your result to the same teacher-reporting service used by the earlier MundiLearning CBT. It cannot independently verify delivery. You can also download your result.</p>'+
+    '<label for="name"><b>Your full name</b></label><input id="name" type="text" autocomplete="name" maxlength="90" placeholder="e.g. Ope" value="'+escapeHtml(nameDraft)+'">'+
+    (message?'<p style="color:var(--bad)">'+escapeHtml(message)+'</p>':'')+
+    '<button class="primary" id="start">Start CBT ▶</button></section>';
+  document.getElementById("start").addEventListener("click",start);
+  document.getElementById("name").addEventListener("keydown",e=>{if(e.key==="Enter")start();});
+}
+function start(){
+  let n=document.getElementById("name").value.trim();nameDraft=n;
+  if(!n){home("Please enter your full name to begin.");return;}
+  state={name:n,index:0,selected:Array(QUESTIONS.length).fill(-1),done:Array(QUESTIONS.length).fill(false),confirm:false,finished:false};
+  questionPage();
+}
+function firstUnanswered(){let i=state.done.indexOf(false);return i===-1?QUESTIONS.length-1:i;}
+function changeQuestion(i){if(i<0||i>=QUESTIONS.length||i>firstUnanswered()||state.finished)return;state.index=i;state.confirm=false;questionPage();}
+function choose(i){if(state.done[state.index])return;state.selected[state.index]=i;questionPage();}
+function markAnswer(){let i=state.index;if(state.done[i]||state.selected[i]===-1)return;state.done[i]=true;state.confirm=false;questionPage();}
+function questionPage(){
+  const i=state.index, q=QUESTIONS[i], done=state.done[i], selected=state.selected[i],count=state.done.filter(Boolean).length;
+  let page='<div class="topline"><span><b>'+escapeHtml(state.name)+'</b></span><span>Answered: '+count+' / '+QUESTIONS.length+'</span></div>'+
+  '<div class="progress"><div style="width:'+(count/QUESTIONS.length*100)+'%"></div></div>'+
+  '<section class="card"><div class="note">Question '+(i+1)+' of '+QUESTIONS.length+'</div><div class="question">'+escapeHtml(q[0])+'</div>';
+  q[1].forEach((opt,k)=>{
+    let cls="option"+(done?(k===q[2]?" correct":k===selected?" incorrect":""):(k===selected?" selected":""));
+    page+='<button type="button" class="'+cls+'" data-pick="'+k+'" '+(done?"disabled":"")+'><b>'+LETTERS[k]+'</b><span>'+escapeHtml(opt)+'</span></button>';
+  });
+  if(done){
+    const right=selected===q[2];
+    page+='<div class="explanation '+(right?"":"wrong")+'"><b>'+(right?"Correct!":"Incorrect.")+'</b> Correct answer: <b>'+LETTERS[q[2]]+'. '+escapeHtml(q[1][q[2]])+'</b>.<br>'+escapeHtml(q[3])+'</div>';
+  }
+  page+='<div class="actions"><div class="group"><button class="secondary" id="prev" '+(i===0?"disabled":"")+'>◀ Previous</button><button class="positive" id="mark" '+(done||selected===-1?"disabled":"")+'>Submit Answer</button></div>'+
+    '<div class="group"><button class="primary" id="next" '+(i===QUESTIONS.length-1||!done?"disabled":"")+'>Next ▶</button><button class="finish" id="finish">Submit CBT ✔</button></div></div>';
+  if(state.confirm){
+    page+='<div class="warning"><b>'+(QUESTIONS.length-count)+' unanswered question(s).</b> Unanswered questions receive zero. Finish anyway? <div class="actions"><button class="finish" id="sure">Yes, submit</button><button class="secondary" id="cancel">Go back</button></div></div>';
+  }
+  page+='</section><section class="card"><b>Question navigator</b><div class="navigator">';
+  QUESTIONS.forEach((_,k)=>{
+    let cls=(state.done[k]?(state.selected[k]===QUESTIONS[k][2]?"correct":"incorrect"):"")+(k===i?" active":"");
+    page+='<button type="button" data-go="'+k+'" class="'+cls+'" '+(k>firstUnanswered()?"disabled":"")+' aria-label="Go to question '+(k+1)+'">'+(k+1)+'</button>';
+  });
+  page+='</div><div class="note">Green = correct · Red = incorrect · Plain = not answered. Questions unlock in sequence.</div></section>';
+  app.innerHTML=page;
+  app.querySelectorAll("[data-pick]").forEach(b=>b.addEventListener("click",()=>choose(Number(b.dataset.pick))));
+  app.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>changeQuestion(Number(b.dataset.go))));
+  document.getElementById("prev").onclick=()=>changeQuestion(i-1);
+  document.getElementById("next").onclick=()=>changeQuestion(i+1);
+  document.getElementById("mark").onclick=markAnswer;
+  document.getElementById("finish").onclick=()=>{if(count<QUESTIONS.length){state.confirm=true;questionPage();}else resultPage();};
+  if(state.confirm){
+    document.getElementById("sure").onclick=resultPage;
+    document.getElementById("cancel").onclick=()=>{state.confirm=false;questionPage();};
+  }
+  window.scrollTo(0,0);
+}
+function resultData(){
+ let score=0;const ans=QUESTIONS.map((q,i)=>{let ok=state.done[i]&&state.selected[i]===q[2];if(ok)score++;return (i+1)+":"+(state.done[i]?LETTERS[state.selected[i]]:"-")+(ok?"+":"-");});
+ let percent=Math.round(score/QUESTIONS.length*1000)/10;
+ return {name:state.name,course:COURSE,score,total:QUESTIONS.length,percent,grade:grades(percent)[0],answers:ans.join(" ")};
+}
+function reportText(d){
+ return "MundiLearning CBT - PCT 203 Dispensing I\nStudent: "+d.name+"\nCourse: "+d.course+"\nScore: "+d.score+"/"+d.total+"\nPercentage: "+d.percent+"%\nGrade: "+d.grade+"\nDate: "+new Date().toLocaleString()+"\nAnswers (+ correct, - wrong/skipped):\n"+d.answers+"\n";
+}
+function downloadReport(){
+ let d=resultData(),blob=new Blob([reportText(d)],{type:"text/plain;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download="PCT203_CBT_result_"+d.name.replace(/[^a-z0-9_-]/gi,"_")+".txt";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function resultPage(){
+ state.finished=true;
+ const d=resultData(),g=grades(d.percent);
+ let page='<section class="card"><h2>CBT Result</h2><p class="muted">'+escapeHtml(d.name)+' · '+escapeHtml(COURSE)+'</p>'+
+  '<div class="stats"><div class="stat"><strong>'+d.score+'/'+d.total+'</strong><small>Score</small></div><div class="stat"><strong>'+d.percent+'%</strong><small>Percentage</small></div><div class="stat"><strong>'+g[0]+'</strong><small>'+g[1]+'</small></div></div>'+
+  '<p class="note">Practice grading: A ≥70% · B ≥60% · C ≥50% · D ≥45% · E ≥40% · F &lt;40%.</p>'+
+  '<div class="actions"><div class="group"><button class="primary" id="retake">Retake CBT ↻</button><button class="secondary" id="download">Download my result ↓</button></div></div>'+
+  '<p class="note" id="sendstatus"></p></section>'+
+  '<section class="card"><h3>Complete answer review</h3>';
+ QUESTIONS.forEach((q,i)=>{
+   const ans=state.done[i]?state.selected[i]:-1,ok=ans===q[2];
+   page+='<div class="review"><span class="badge '+(ok?"":"no")+'">'+(ok?"Correct":ans<0?"Skipped":"Incorrect")+'</span> <span class="heading">Question '+(i+1)+'. '+escapeHtml(q[0])+'</span>'+
+    '<br><b>Your answer:</b> '+(ans===-1?"—":escapeHtml(LETTERS[ans]+". "+q[1][ans]))+
+    '<br><b>Correct answer:</b> '+escapeHtml(LETTERS[q[2]]+". "+q[1][q[2]])+
+    '<br><span class="note">'+escapeHtml(q[3])+'</span></div>';
+ });
+ app.innerHTML=page+'</section>';
+ document.getElementById("download").onclick=downloadReport;
+ document.getElementById("retake").onclick=()=>{nameDraft=state.name;state=null;home();};
+ window.scrollTo(0,0);
+ sendResult(d);
+}
+function sendResult(d){
+ const el=document.getElementById("sendstatus");
+ if(!SUBMIT_URL){el.textContent="Online result reporting is not configured. Download your result instead.";return;}
+ el.textContent="Attempting to send your result to the teacher's reporting service…";
+ try {
+ fetch(SUBMIT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(d)})
+ .then(()=>{if(el.isConnected)el.textContent="Result submission request completed. The reporting service does not provide a receipt, so delivery cannot be confirmed here. You may also download your result.";})
+ .catch(()=>{if(el.isConnected)el.innerHTML='Could not send the result. Check your connection and <button class="secondary" id="retry">retry submission</button>.';let b=document.getElementById("retry");if(b)b.onclick=()=>sendResult(d);});
+ }catch(e){el.textContent="Result could not be sent. Please download your result.";}
+}
+home();
+</script></body></html>
